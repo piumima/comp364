@@ -1,0 +1,121 @@
+# Introduction to R
+# April 1, 2008
+# Stat560
+
+################################
+# R as a calculator
+################################
+
+3^3
+log10(100)
+exp(4)
+
+################################
+# Creating objects and assigning values
+# Objects are assigned using <-
+# Note, R is case sensitive! x and X are different
+################################
+# a scalar
+x <- 5
+y <- 2
+x * y
+z <- "I_Heart_R"
+
+# a vector created with the concatenation function (c)
+# must consist of the same type of data (i.e., numeric, character, logical)
+x12 <- c(10,6,8)
+x12 * 10
+people <- c(seq(1,6,1))
+blood.gp <- c('A', 'B', 'AB', 'B', 'O', 'O')
+sex <- c( rep('M', 3), rep('F', 3) )
+# hey, what is seq and rep? Just ask R: at the prompt type ?rep and ?seq
+
+# accessing specific elements
+# the first element of the vector people
+people[1]
+# elements 1 through 3 of the vector people
+people[1:3]
+# the second element of the vector blood.gp
+blood.gp[2]
+
+# lists are similar to vectors but can have different data types
+# formally described as An R list is an ob ject consisting of an ordered collection of ob jects known as its components.
+doe <- list(name="john",age=28,married=F)
+doe
+names(doe)
+doe$name
+doe$age
+
+# another example
+Lst <- list(name="Fred", wife="Mary", no.children=3,  child.ages=c(4,7,9)) 
+Lst$child.ages
+Lst[[4]]
+
+# Binding vectors together
+dai <- c(0,1,2,5,10,20)
+pinf <- c(0,0,0,5,25,80)
+row.bind <- rbind(dai,pinf)
+col.bind <- cbind(dai,pinf)
+
+# accessing columns and rows
+row.bind[1,1] # this gets the element in row 1 column 1
+row.bind[,1] # this gets all elements in column 1
+row.bind[1,] # this gets all elements in row 1
+
+
+# Matrices
+m1 <- matrix(1:9, byrow=T, ncol=3)
+m2 <- matrix(1:9, byrow=F, ncol=3)
+m1[,1]
+m1[,2]
+m1[1,]
+
+# data frames are a useful object and can consist of data of different types arranged in
+# a rectangular table. They are basically matrices that can be composed of different data types
+df5 <- data.frame(dai,pinf)
+clinic.1 <- data.frame(people, blood.gp, sex)
+clinic.1$people
+clinic.1$people[1:3]
+
+# useful functions for working with dataframes
+dim(clinic.1)
+colnames(clinic.1)
+attributes(clinic.1)
+
+# Making an index
+# Recall above we made the character vector sex, consisting of M's and F's
+sex
+
+# What if we wanted to just pull out the elements with an M
+which(sex== 'M')
+blokes <- which(sex== 'M')
+blokes
+sex[blokes]
+# How would you get the sex of the female samples?
+
+# modifying subsets of data 
+my.vector <- c(seq(0,20,2))
+my.vector
+index <- which(my.vector < 5)
+my.vector[index]
+my.vector[index] <- my.vector[index] + .1
+my.vector
+
+# reading data into a file
+data <- read.table( "filename.txt", header=T)
+?read.table
+
+# writing data to a file
+write.table <- write.table(data, file = "new_file.txt", row.names = F, quote = F, sep="\t")
+
+# see what objects exist
+ls()
+
+# removing objects
+rm(blokes)
+
+# saving objects for future R sessions
+save.image()
+
+# quit R
+q()
