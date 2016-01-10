@@ -1,2 +1,10 @@
 This is the course repository. 
 Each directory contains a brief description of its purpose.
+
+
+A small note regarding git: you should execute the following from a terminal window when within your git repostiory (comp618)
+
+git config --global user.name "Michael Hallett"
+git config --global user.email "michael.t.hallett@mcgill.ca"
+
+But ... use your name/email ....
