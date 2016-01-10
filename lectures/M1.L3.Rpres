@@ -1,0 +1,430 @@
+Module 1, Lecture 3: Initiating R and RStudio
+========================================================
+author: M Hallett
+date: January 2016
+autosize:true
+font-family: 'Helvetica' 
+#output: beamer-presentation 
+
+## R, RStudio, GIT repositories for the course.
+
+
+
+The R Project (www.r-project.org)
+========================================================
+
+![R homepage](MyFigs/R.homepage.png)
+
+The R Project
+========================================================
+### **What is R?**
+
+* R is a language and environment for statistical computing and graphics.
+* It is a GNU project which is similar to the S language developed at Bell Laboratories by Jo
+hn Chambers et al.
+
+* R and it's assocaited packages togetherprovide a wide variety of functionalties:
+  + linear and non-linear modelling,
+  + classical statistical tests,
+  + time-series,
+  + classification,
+  + clustering, graphics, .... and it is highly extensible.
+
+<br><br><hr><br>
+
+Installing R on your  machine
+========================================================
+
+
+Available @ CRAN (Comprehensive R Archive Network) Vers 3.1.2
+<tiny><code><font color = "blue">
+R version 3.1.2 (2014-10-31) -- "Pumpkin Helmet"<br>
+Copyright (C) 2014 The R Foundation for Statistical Computing<br>
+Platform: x86_64-apple-darwin10.8.0 (64-bit)<br>
+<br>
+R is free software and comes with ABSOLUTELY NO WARRANTY.<br>
+You are welcome to redistribute it under certain conditions.<br>
+Type 'license()' or 'licence()' for distribution details.<br>
+<br>
+Type 'demo()' for some demos, 'help()' for on-line help, or<br>
+'help.start()' for an HTML browser interface to help.<br>
+Type 'q()' to quit R.<br>
+\> <br>
+</font color>
+</code></tiny>
+
+
+Manuals and other learning aids
+========================================================
+
+* Manual @ http://www.r-project.org/
+* On-line course @ http://tryr.codeschool.com/
+* Additional items at course homepage...
+* www.bci.mcgill.ca/
+* <code><font color="blue">Stackoverflow.com </font color></code> is really good. Most common questions have aleady been asked and answered.
+
+
+RStudio: tools that make R easier to use
+========================================================
+* Free for academic use.
+* http://www.rstudio.com/
+
+<img src="MyFigs/Rstudio.screenshot.png" alt="RStudio" style="width: 2000px;"/>
+
+
+RStudio
+========================================================
+
+* 4 main windows
+  + top left: your code
+  + bottom left: an R session where you can run your code
+  + top right: details of your R environment (defined variables, datastructures, history, ...
+)
+  + bottom right: input/output (access to your files, plots that you produce, help, ...)
+  
+***
+
+<img src="MyFigs/Rstudio.screenshot.png" alt="RStudio" style="width: 1250px;"/>
+
+A couple of operating system things (1)
+========================================================
+
+* On Macs or Linux, open a <code><font color="blue"> terminal </font></code> window.<br>
+-- This is in the <code><font color="blue">Applications/Utilities </font></code> folder.<br>
+* <code><font color="blue"> cd ~ </font></code><br>
+-- This puts you in your "home" directory. ("above" your Desktop actually)
+* <code><font color="blue"> mkdir repos </font></code><br>
+-- This makes a directory for the course repository.
+* <code><font color="blue"> cd repos </font></code><br>
+-- cd (change directory) into repos<br>
+
+A couple of operating system things (2)
+========================================================
+* Go to bitbucket and find the page for COMPxxx (364 or 618).<br>
+* Look for the <code><font color="blue"> clone </font></code> option.<br>
+-- This is the instruction you need to copy and paste into your repos directory.<br>
+* Copy the <code><font color="blue"> git clone https:... </font></code><br>
+* Paste this code into your terminal window. <br> 
+-- (So in the <code><font color="blue"> repos </font></code> directory.)
+* You *might* get an error as your machine may not have git (properly) installed.
+
+
+
+Installing or Fixing Git on a Mac (1)
+========================================================
+
+* On a modern, updated Mac with El Capitan, you might have to update some of the developer code. The instructions are on the course web page.
+* On older Macs or PCs, we will have to deal with it on a case-by-case basis.
+* On PCs, you can download Git here: 
+https://git-scm.com/downloads
+* Go back and do the <code><font color="blue">git clone ...</font color></code>  after it is installed.
+
+Starting with RStudio (1)
+========================================================
+
+
+<tiny>
+<code><font color="blue">
+* Preferences/General Default Working Directory<br>
+* Preferences/Sweave <font color="black"> under Weave Rnw files type</font> knitr<br>
+* Tools/Install Packages <font color="black"> under Packages type</font> knitr<br>
+-- <font color="black"> then type y in lower left window when instructed</font><br>
+</font>
+</code>
+</tiny>
+
+The knitr package will allow you to look at the lecture notes a bit more easily.
+
+
+After a successful cloning (3)
+========================================================
+
+
+In your <code><font color="blue">terminal</font color></code> window type: <br>
+<code><font color="blue">ls</font color></code><br>
+total 8<br>
+drwxr-xr-x 8 hallett nogroup 5 Jan 15 14:10 comp364<br>
+
+<font color="red">_Or comp618. So there is now a director in repo._</font>
+<code><font color="blue">cd comp364</font color></code><br>
+<font color="red">_Change directory (cd) into the comp364 directory that you just cloned._</font color>
+
+What the repository looks like
+========================================================
+
+<code><font color="blue">ls</font color></code><br>
+total 17<br>
+-rw-r--r-- 1 hallett nogroup 91 Jan 12 14:10 README<br>
+drwxr-xr-x 2 hallett nogroup  3 Jan 12 14:10 assignments<br>
+drwxr-xr-x 2 hallett nogroup  8 Jan 12 14:10 data<br>
+drwxr-xr-x 2 hallett nogroup  3 Jan 12 14:10 experiments<br>
+drwxr-xr-x 2 hallett nogroup  3 Jan 12 14:10 lectures<br>
+drwxr-xr-x 2 hallett nogroup  4 Jan 12 14:10 src<br>
+
+<font color="red">_Change directory (cd) into the comp364 directory that you just cloned._</font color>
+
+
+What the repository looks like (2)
+========================================================
+<code><font color="blue">cat README</font color></code><br>
+...
+
+<font color="red">_The cat (concatenate) commands allows you to look at the contents of a text file._</font color>
+
+<font color="red">_README files are sort of standard
+for providing users in Unix with important information about files._</font color>
+
+What the repository looks like (3)
+========================================================
+
+<code><font color="blue">cd lectures</font color></code><br>
+<code><font color="blue">ls -l</font color></code><br>
+
+
+<font color="red">_But it's easier to examine these files using the bottom-right RStudio window (Files)._</font color>
+
+<img src="MyFigs/Rstudio.screenshot.png" alt="RStudio" style="width: 1500px;"/>
+
+
+Creating a Project within RStudio
+========================================================
+
+* To make the connection between your repository and your clone of it, first make an RStudio project.
+* In RStudio, choose <code><font color="blue">File/New Project/Existing Directory/Browse</font color></code>.
+* Now select your cloned directory <code><font color="blue">comp364</font color></code>.
+* In the Top-Right RStudio window, select <code><font color="blue">Git</font color></code>.
+* Any files you change, will be highlighted. 
+* If you select these files, and then hit <code><font color="blue">Commit</font color></code>, your files will be securely saved.
+
+
+
+
+
+"Pulling" updates of the course files via GIT (1)
+========================================================
+
+The nice thing about using GIT is that it allows us to smoothly update, fix and modify the course notes, data and R scripts.
+
+### Step 1 ###
+* Initiate an RStudio session using the rstudio.cs.mcgill.ca as above.
+
+### Step 2 (simple)###
+
+* Assuming you have cloned the  directory and you have made an Rproj (see above), select the Top-Right RStudio window.
+* Choose the <code><font color="blue">Git</font color></code> panel and hit the <code><font color="blue">Pull</font color></code> button.
+
+"Pulling" updates of the course files via GIT (2)
+========================================================
+
+### Step 2 (more complicated)###
+* Go to <code><font color="blue">Tools/Shell</font color></code>.
+* <code><font color="blue">cd ~/comp364</font color></code> or wherever you created your comp364 directory (eg ~/repos/comp364).
+*  <code><font color="blue">git pull</font color></code>
+
+In other words, cd (change directory) to the place where you initially cloned the student comp364 directory (the previous slides suggest ~/comp364). The pull commands "pulls" all the updates, modifications and additions that Dani or I have made and merges them with your file, seemlesssly.
+
+
+ Problems 
+========================================================
+* RStudio: Kill it and re-start. Worst case, re-install & re-create project.
+* GIT problems: ask. 
+* R should be ok but sometimes you might have problems with missing libraries and packages. Ask.
+
+
+Some Basic Unix (1)
+========================================================
+
+* Log into your account on your Unix/Linux machine or on rstudio.cs. 
+* You can also do <code><font color="blue">Tools/shell</font color></code> within RStudio.
+
+<code><font color="blue">cd</font color></code><br>
+<font color="red">_cd = "change directory". When you type this alone, you are sent back to your home._</font color>
+
+<code><font color="blue">cd \~</font color></code><br>
+<font color="red">_The tilde is a symbol meaning your come. Executing "cd" and "cd \~" are the same._</font color>
+
+<code><font color="blue">ls</font color></code><br>
+comp364  R  <br>
+<font color="red">_"ls = list. This lists all the files & directories in your currently location._</font color>
+
+Some Basic Unix (2)
+========================================================
+
+<code><font color="blue">cd \~/comp364</font color></code><br>
+<font color="red">_This moves you down one level of the tree into your comp364 directory._</font color>
+
+<tiny>
+<code><font color="blue">ls -l</font color></code><br>
+<code>
+total 19<br>
+drwxr-xr-x 2 hallett nogroup   3 Jan 12 14:10 assignments<br>
+-rw-r--r-- 1 hallett nogroup 205 Jan 12 14:29 comp364.Rproj<br>
+drwxr-xr-x 2 hallett nogroup   8 Jan 12 14:10 data<br>
+drwxr-xr-x 2 hallett nogroup   3 Jan 12 14:10 experiments<br>
+drwxr-xr-x 3 hallett nogroup   5 Jan 12 14:25 lectures<br>
+-rw------- 1 hallett nogroup   0 Jan 12 14:57 my.new.lecture<br>
+-rw-r--r-- 1 hallett nogroup  91 Jan 12 14:10 README<br>
+drwxr-xr-x 2 hallett nogroup   4 Jan 12 14:10 src<br>
+</code>
+</tiny>
+<font color="red">_-l is called a flag. In this case, the ls cmd gives you more information and you can distinguish between directories and files._</font color>
+
+<code><font color="blue">cat README</font color></code><br>
+<code>This is the course repository. Each directory contains a brief description of its purpose.<br></code>
+<font color="red">_cat = concatenate. Print the contents of a text file._</font color>
+
+Some Basic Unix (3)
+========================================================
+
+<code><font color="blue">cd lectures</font color></code><br>
+<font color="red">_This moves you down another level of the tree._</font color>
+
+<code><font color="blue">pwd</font color></code><br>
+<code>/home/2015/hallett/comp364/lectures<br></code>
+<font color="red">_print working directory. This tells you where you are in your tree._</font color>
+
+<code><font color="blue">touch my.new.lecture</font color></code><br>
+<font color="red">_touch creates an empty file with the given name._</font color>
+
+Some Basic Unix (4)
+========================================================
+
+<code><font color="blue">ls -l</font color></code><br>
+<code>
+total 18959<br>
+-rw-r--r-- 1 hallett nogroup       48 Jan 12 14:10 lectures-readme.txt<br>
+drwx------ 3 hallett nogroup        5 Jan 12 14:23 M1.L1<br>
+-rw------- 1 hallett nogroup 19319296 Jan 12 14:24 M1.L2.ppt<br>
+-rw------- 1 hallett nogroup        0 Jan 12  2015 my.new.lecture<br>
+</code>
+
+Some Basic Unix (5)
+========================================================
+
+<code><font color="blue">mv my.new.lecture \~/my.new.lecture.moved</font color></code><br>
+<font color="red">_mv = move. This moves the file "my.new.lecture" to a new location (my home directory \~) and a new name "my.new.lecture.moved"._</font color>
+
+<code><font color="blue">ls -l</font color></code><br>
+<code>
+total 18958<br>
+-rw-r--r-- 1 hallett nogroup       48 Jan 12 14:10 lectures-readme.txt<br>
+drwx------ 3 hallett nogroup        5 Jan 12 14:23 M1.L1<br>
+-rw------- 1 hallett nogroup 19319296 Jan 12 14:24 M1.L2.ppt<br>
+</code>
+
+Some Basic Unix (6)
+========================================================
+<code><font color="blue">cd \~</font color></code><br>
+<font color="red">_Let's move back to the top where we moved the file._</font color>
+
+<code><font color="blue">ls -l</font color></code><br>
+<code>
+total 8<br>
+drwxr-xr-x 9 hallett nogroup 13 Jan 12 14:57 comp364<br>
+-rw------- 1 hallett nogroup  0 Jan 12 15:12 my.new.lecture.moved<br>
+drwxr-xr-x 3 hallett nogroup  3 Jan 11 13:41 R<br>
+-rw-r--r-- 1 hallett nogroup  5 Jan 11 14:02 tmp.R<br>
+</code>
+
+<code><font color="blue">cp my.new.lecture.moved didntmove.again</font color></code><br>
+<font color="red">_cp=copy. It makes a copy (but doesn't destroy the original) of a file. The second argument is the name of the file._</font color>
+
+Some Basic Unix (7)
+========================================================
+<code><font color="blue">ls -l</font color></code><br>
+<code>
+total 9<br>
+drwxr-xr-x 9 hallett nogroup 13 Jan 12 14:57 comp364<br>
+-rw------- 1 hallett nogroup  0 Jan 12  2015 didntmove.again<br>
+-rw------- 1 hallett nogroup  0 Jan 12 15:12 my.new.lecture.moved<br>
+drwxr-xr-x 3 hallett nogroup  3 Jan 11 13:41 R<br>
+-rw-r--r-- 1 hallett nogroup  5 Jan 11 14:02 tmp.R<br>
+</code>
+
+Some Basic Unix (8)
+========================================================
+
+<code><font color="blue">rm my.new.lecture.moved</font color></code><br>
+<font color="red">_rm=remove. This removes the specified file. Unix might prompt you to be sure._</font color>
+
+<code><font color="blue">ls -l</font color></code><br>
+<code>
+total 8<br>
+drwxr-xr-x 9 hallett nogroup 13 Jan 12 14:57 comp364<br>
+-rw------- 1 hallett nogroup  0 Jan 12 15:16 didntmove.again<br>
+drwxr-xr-x 3 hallett nogroup  3 Jan 11 13:41 R<br>
+-rw-r--r-- 1 hallett nogroup  5 Jan 11 14:02 tmp.R<br>
+</code>
+
+Some Basic Unix (9)
+========================================================
+
+<code><font color="blue">cd \~</font color></code><br>
+<code><font color="blue">cp -r comp364 comp364.backup</font color></code><br>
+
+<font color="red">_The -r flag means "recursive": Copy comp364 and all the files/directories within comp364 and all the files/directories within each directory within comp364, etc. etc. etc._</font color>
+
+<code><font color="blue">ls -l</font color></code><br>
+<code>
+total 11<br>
+drwxr-xr-x 9 hallett nogroup 13 Jan 12 14:57 comp364<br>
+drwx------ 9 hallett nogroup 13 Jan 12  2015 comp364.backup<br>
+-rw------- 1 hallett nogroup  0 Jan 12 15:16 didntmove.again<br>
+drwxr-xr-x 3 hallett nogroup  3 Jan 11 13:41 R<br>
+-rw-r--r-- 1 hallett nogroup  5 Jan 11 14:02 tmp.R<br>
+</code>
+
+Some Basic Unix (10)
+========================================================
+
+<code><font color="blue">rm -r comp364.backup</font color></code><br>
+<code>
+rm: descend into directory ‘comp364.backup/’? y<br>
+rm: descend into directory ‘comp364.backup/src’? y<br>
+rm: remove regular file ‘comp364.backup/src/src-readme.txt’?<br> 
+</code>
+<font color="red">_The -r flag again means "recursive". but this will take a long time..._</font color>
+
+
+<code><font color="blue">rm -r -f comp364.backup</font color></code><br>
+<font color="red">_The -f flag again means force the remove (don't ask for permission)._</font color>
+
+Some Basic Unix (11)
+========================================================
+<code><font color="blue">top</font color></code><br>
+<code>
+top - 16:04:53 up 7 days,  1:57,  3 users,  load average: 0.00, 0.02, 0.05<br>
+KiB Mem:   8176704 total,  2137472 used,  6039232 free,   165264 buffers<br>
+KiB Swap:  8388604 total,        0 used,  8388604 free.  1660936 cached Mem<br>
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND <br>                      
+    1 root      20   0   35592   2904   1480 S   0.0  0.0   0:02.52 init          <br>                  
+    2 root      20   0       0      0      0 S   0.0  0.0   0:00.00 kthreadd      <br>                  
+    3 root      20   0       0      0      0 S   0.0  0.0   0:00.52 ksoftirqd/0   <br>                  
+    5 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 kworker/0:0H   <br>                 
+    7 root      20   0       0      0      0 S   0.0  0.0   0:21.18 rcu_sched    <br>                   
+</code>                  
+<font color="red">_All the processes running on the machine. Everyone's._</font color>
+
+Some Basic Unix (12)
+========================================================
+<code><font color="blue">top</font color></code><br>
+<code><font color="blue">u hallett</font color></code><br>
+<code>
+top - 16:04:53 up 7 days,  1:57,  3 users,  load average: 0.00, 0.02, 0.05<br>
+Tasks: 120 total,   1 running, 119 sleeping,   0 stopped,   0 zombie<br>
+...
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND <br>        
+  2307 hallett   20   0  124732   2040   1000 S   0.0  0.0   0:00.09 sshd        <br>                  
+ 2308 hallett   20   0   33600   4144   1976 S   0.0  0.1   0:00.08 bash     <br>
+</code>
+<font color="red">_Just my processes._</font color>
+
+<code><font color="blue">kill -9 2307</font color></code><br>
+<font color="red">_Kills my process with PID (process ID) 2307._</font color>
+
+COMP-364 and COMP-618 (c) M Hallett, BCI-McGill
+========================================================
+![BCI-McGill](MyFigs/sysbiologo.png)
+
+
+
