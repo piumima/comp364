@@ -8,3 +8,5 @@ git config --global user.name "Michael Hallett"
 git config --global user.email "michael.t.hallett@mcgill.ca"
 
 But ... use your name/email ....
+
+A completely useless comment for instruciton purposes only.
