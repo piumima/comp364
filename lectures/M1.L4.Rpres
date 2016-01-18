@@ -39,7 +39,7 @@ R: simple arithmetic
 ========================================================
 ```{r}
 2+2 * 3 - 4 / (5 ^ 6) * sqrt(8)
-log(18, base=exp(2))
+log(18, base=2)
 
 log(32, base=exp(1))
 # a comment: exp(1) = e 
