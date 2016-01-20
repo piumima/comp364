@@ -111,7 +111,7 @@ R, data frames: Importing a csv file into R (2)
 ========================================================
 - This is your typical csv file that can be generated from Excel, Numbers, etc.
 - we assume that this file is named <code>oncotypedx.csv</code>
-- we assume it's located in our working directory (eg ~/comp364)
+- we assume it's located in our working directory (eg ~/repos/comp364)
 ```{r}
 setwd("~/repos/comp364/lectures/MiscFiles")
 # first do: help read.csv
