@@ -141,7 +141,7 @@ R: some important misc. things
 ========================================================
 .
 
-setwd("~/comp364")  
+setwd("~/repos/comp364")  
   # sets working directory
 y <- 11 
   # assign y to be 11
