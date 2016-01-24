@@ -80,6 +80,10 @@ R: objects
 
 R: boolean type and operators
 ========================================================
+.
+.
+
+
 ```{r}
 x <- TRUE; y <- !x; class(x)
 (x == !y)
@@ -87,6 +91,8 @@ x <- TRUE; y <- !x; class(x)
 (!x == y)
 ```
 ***
+.
+
 ```{r}
 x <- TRUE
 y <- FALSE
