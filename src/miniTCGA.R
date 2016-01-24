@@ -1,3 +1,6 @@
+## This is MY miniTCGA.R file and anyone else who uses it
+## will be sued.
+##
 ## miniTCGA.R
 ##
 ## Description:
