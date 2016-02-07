@@ -1,0 +1,187 @@
+Module1, Lecture 7: Introduction to Differential Expression Analysis
+========================================================
+author: M Hallett
+date: January 2015
+autosize:true
+font-family: 'Helvetica' 
+#output: beamer-presentation 
+
+## gene expression, differential expresion, patient clinical outcome, descriptive statistics, hypothesis testing
+
+
+Differential Expression - A simple approach
+========================================================
+* A natural question is to ask whether a gene displays differential expression
+between good and bad outcome patients.
+
+```{r}
+source("~/repos/comp364/src/hucMini.R")  # students should change this to ~/cs364/src/hucMini.R 
+dataset.collections <- c("miniTCGA", "vanvliet", "nki") 
+huc <- huc.load(dataset.collections, "~/repos/comp364/data")  # students should change this to ~/cs364/data
+names(huc)
+
+attach(huc$vanvliet)
+observed.good <- subset(clinical, !event.5) 
+observed.bad <- subset(clinical, event.5)
+length(observed.good[,1]); length(observed.bad[,1])
+```
+
+Differential Expression - A simple approach
+========================================================
+```{r}
+(probes.for.TP53 <- which( probe.info$gene.name == "TP53" ))
+exprs[probes.for.TP53, observed.good$id][,1:5]  # 1st 5 of 25
+exprs[probes.for.TP53, observed.bad$id][,1:5]   # 1st 5 of 25
+```
+
+Differential Expression - A simple approach
+========================================================
+```{r}
+exprs[probes.for.TP53, observed.good$id][,1:5]  # 1st 5 of 25
+exprs[probes.for.TP53, observed.bad$id][,1:5]   # 1st 5 of 25
+```
+
+Differential Expression - A simple approach
+========================================================
+* Is the observed difference in mean expression of 0.036 (good) versus -0.065 (poor) sufficient
+ly large as to conclude that the famous TP53 gene is differentially expressed between good
+and poor outcome breast cancer patients? 
+* (If so, we'd conclude it was under-expressed in poor outcome patients.)
+* A very natural question that could be asked of all ~20,000 genes.
+* But there are many issues here.
+
+Differential Expression - A simple approach
+========================================================
+  - What's the null hypothesis ($H_0$) here?
+  - What's the alternative hypothesis ($H_1$)?
+  - What are the options for different statistical tests?
+  - What about differences between the two probes (whether within good or poor outcome)?
+
+Differential Expression: Descriptive statistics
+========================================================
+- Let's get a rough idea of what this data looks like.
+```{r}
+tmp.good <- c(exprs[probes.for.TP53[1], observed.good$id], exprs[probes.for.TP53[2], observed.good$id])
+summary(tmp.good)
+```
+
+Differential Expression: Descriptive statistics
+========================================================
+```{r}
+stem(tmp.good)
+```
+Differential Expression: Descriptive statistics
+========================================================
+```{r}
+tmp.bad <- c(exprs[probes.for.TP53[1], observed.bad$id], exprs[probes.for.TP53[2], observed.bad$id])
+summary(tmp.bad)
+stem(tmp.bad)
+```
+Differential Expression: Histograms
+========================================================
+```{r}
+hist(tmp.good)
+```
+***
+```{r}
+hist(tmp.bad)
+```
+Differential Expression: Histograms
+========================================================
+```{r}
+density.tmp.good <- density(tmp.good)
+hist(tmp.good, prob=TRUE)
+lines(density.tmp.good)
+```
+***
+```{r}
+density.tmp.bad <- density(tmp.bad)
+hist(tmp.bad, prob=TRUE)
+lines(density.tmp.bad)
+```
+Differential Expression: Boxplots
+========================================================
+```{r} 
+boxplot( tmp.good, tmp.bad, names=c("Good Outcome", "Bad Outcome") )
+```
+
+Differential Expression: Parametric statistical tests, t-test
+========================================================
+- Alternative Hypothesis $H_1$: $\mu_{good} - \mu_{bad} \neq 0$</code>.
+- Null Hypothesis $H_0$:  $\mu_{good} - \mu_{bad} = 0$.
+```{r}
+t.test(tmp.good, tmp.bad, var.equal=TRUE) # two sample t-test
+```
+Differential Expression: Parametric statistical tests, t-test
+========================================================
+- Alternative Hypothesis $H_1$: $\mu_{good} - \mu_{bad} \neq 0$</code>.
+- Null Hypothesis $H_0$:  $\mu_{good} - \mu_{bad} = 0$.
+```{r}
+t.test(tmp.good, tmp.bad)   # by default differences in variance are not considered (Welch test)
+```
+
+Differential Expression: Non-parametric statistical tests, Wilcoxon
+========================================================
+- Alternative Hypothesis $H_1$: The location shift is not equal to 0.
+- Null Hypothesis $H_0$:  It is equal to 0.
+```{r}
+wilcox.test(tmp.good, tmp.bad)
+```
+
+
+
+Differential Expression: Empirical Cumulative Probability Distribution
+========================================================
+```{r}
+ecdf.good <- ecdf(tmp.good) # computes an empirical CDF. Important for plotting
+ecdf.good(0.3)   # 30th percentile.
+plot(ecdf.good, main="Observed good outcome", xlab = "log Expression Value")
+```
+Differential Expression: Empirical Cumulative Probability Distribution
+========================================================
+```{r}
+plot(ecdf.good, main="Observed good outcome", xlab = "log Expression Value",
+        do.points=FALSE)
+```
+Differential Expression: Empirical Cumulative Probability Distribution
+========================================================
+```{r}
+ecdf.bad <- ecdf(tmp.bad) # computes an empirical CDF. Important for plotting
+plot(ecdf.bad, main="Observed bad outcome", xlab = "log Expression Value",
+        do.points=FALSE)
+```
+
+Differential Expression: Non-parametric statistical tests, Kolmogorov-Smirnoff
+========================================================
+- Alternative Hypothesis $H_1$: (Intuitively) the cdf of tmp.good is not equal to the cdf of tmp.bad.<br>
+- Null Hypothesis $H_0$:  They are equal.
+```{r}
+ks.test(tmp.good, tmp.bad)
+```
+Differential Expression: Non-parametric statistical tests, Kolmogorov-Smirnoff
+========================================================
+* A note here: one can assign the results of such tests and query the individual pieces of information
+related to the test.
+
+```{r} 
+ks.result <- ks.test(tmp.good, tmp.bad)
+names(ks.result)
+ks.result$p.value
+```
+ 
+Differential Expression: Is the good outcome CDF near a normal distribution?
+========================================================
+```{r}
+summary(ecdf.good)
+#range <- seq(min(tmp.good), max(tmp.good), 0.01)
+
+#sample.from.range <- pnorm(range, mean=mean(ecdf.good), sd=sqrt(var(ecdf.good)))
+#lines(range, sample.from.range, lty=3)
+#ks.test(tmp.good, sample.from.range)
+```
+
+
+COMP-364 (c) M Hallett, BCI-McGill
+========================================================
+![BCI-McGill](MyFigs/sysbiologo.png)
+

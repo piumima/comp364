@@ -31,7 +31,7 @@ The Human Compendium (HuC) (2)
 ========================================================
 Let's load three datasets for now
 ```{r}
-dataset.collections <- c("miniTCGA", "vanvliet", "nki", "curtis.discovery", "curtis.validation")
+dataset.collections <- c("miniTCGA", "vanvliet", "nki") 
 huc <- huc.load(dataset.collections, "~/repos/comp364/data") # for you change this to 
 names(huc)
 names(huc$miniTCGA)
