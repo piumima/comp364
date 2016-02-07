@@ -1,0 +1,163 @@
+Module1, Lecture 6: The Human Compendium (Huc) of Expression
+========================================================
+author: M Hallett
+date: January 2016
+autosize:true
+font-family: 'Helvetica' 
+#output: beamer-presentation 
+
+## gene expression, R datastructures for storing patient clinical and expression data.
+
+
+The Human Compendium (HuC)
+========================================================
+- Throughout this course, we will examine breast cancer -omic datasets.
+- We've made available a compendium of some available gene
+expression datasets.
+- It is organized as an R data.frame.
+- First we load a file which contains a set of functions that we wrote to load and process the
+HuC into R.
+```{r}
+source("~/repos/comp364/src/hucMini.R")
+```
+
+The Human Compendium (HuC)
+========================================================
+- We can check the functions available now
+```{r}
+ls()
+```
+The Human Compendium (HuC) (2)
+========================================================
+Let's load three datasets for now
+```{r}
+dataset.collections <- c("miniTCGA", "vanvliet", "nki", "curtis.discovery", "curtis.validation")
+huc <- huc.load(dataset.collections, "~/repos/comp364/data") # for you change this to 
+names(huc)
+names(huc$miniTCGA)
+names(huc$miniTCGA$clinical)
+```
+
+The Human Compendium (HuC): hucMini.R
+========================================================
+
+* Other types besides mRNA expression can be loaded by the huc.load() function
+* Read the Comments at the begining of hucMini.R
+* More later.
+```{r}
+  ## Args:
+  ##  dataSets  : Which data set(s) we should load from.
+
+  ##                  miniTCGA 
+  ##                  vanvliet
+  ##                  nki
+  ##                  curtis.validation
+  ##                  curtis.discovery
+  ## TODO             mcgill.gq
+  ##
+  ##  dataDir   : The data directory in the cloned repo
+  ##  dataTypes : Vector of what you would like to load per
+  ##              dataset.
+  ##              Supports:
+  ##                  exprs           - Gene expression
+  ##                  cnv             - Copy number variations
+  ##                  somatic.curated - Curated somatic mutations
+  ## TODO             rna-seq         - RNA Seq data
+  ## TODO             dna-seq         - DNA Seq data
+  ##                  all             - All available types
+  ##                  none            - Loads only the clinical data.
+  ##
+```
+
+
+
+The Human Compendium (HuC) (3)
+========================================================
+<img src="MyFigs/huc.png" alt="HuC" style="width: 1000px;"/>
+
+The Human Compendium (HuC) (3)
+========================================================
+<img src="MyFigs/huc2.png" alt="HuC.2" style="width: 1500px;"/>
+
+The Human Compendium (HuC) (4)
+========================================================
+<img src="MyFigs/huc_miniTCGA.png" alt="objects" style="width: 1400px;"/>
+
+The Human Compendium (HuC) (5)
+========================================================
+<img src="MyFigs/huc_miniTCGA2.png" alt="objects" style="width: 1400px;"/>
+
+
+The Human Compendium (HuC) (6)
+========================================================
+```{r}
+names(huc$miniTCGA$clinical)
+huc$miniTCGA$clinical[1:10, c("er", "her2", "event.5", "lymph", "chemo", "herceptin")]
+```
+
+ HuC (7)
+========================================================
+```{r}
+huc$vanvliet$clinical[1:10, c("er", "her2", "event.5", "lymph", "chemo", "herceptin")]
+```
+
+HuC (8)
+========================================================
+```{r}
+names(huc$miniTCGA)
+length(huc$miniTCGA$exprs[1,]) # number of patients
+huc$miniTCGA$exprs[1:10, 1:5]
+```
+
+HuC (9)
+========================================================
+```{r}
+names(huc$miniTCGA)
+length(huc$miniTCGA$probe.info[,1]) # number of genes
+huc$miniTCGA$probe.info[1:10, ]
+```
+
+
+HuC (10)
+========================================================
+```{r}
+names(huc$vanvliet)
+attach(huc$vanvliet)
+length(subset(clinical, er))
+length(subset(clinical, !er & !her2))
+```
+HuC (10)
+========================================================
+```{r}
+  subset(clinical, !er & !her2 & lymph)
+detach(huc$vanvliet)
+```
+
+
+HuC (11)
+========================================================
+```{r}
+names(huc$vanvliet$clinical)
+```
+HuC (12)
+========================================================
+```{r}
+attach(huc$vanvliet)
+observed.good <- subset(clinical, !event.5) 
+observed.bad <- subset(clinical, event.5)
+length(observed.good[,1]); length(observed.bad[,1])
+(probes.for.TP53 <- which( probe.info$gene.name == "TP53" ))
+```
+HuC (10)
+========================================================
+```{r}
+# average expression over all probes for TP53 in good versus poor outcome 
+mean(exprs[probes.for.TP53, observed.good$id]); mean(exprs[probes.for.TP53, observed.bad$id])
+ 
+```
+
+
+COMP-364 (c) M Hallett, BCI-McGill
+========================================================
+<img src="MyFigs/sysbiologo.png" alt="BCI-McGill" style="width: 750px;"/>
+
