@@ -13,10 +13,11 @@
 ## This code may not be used, modified, distributed, read or thought-about
 ## without the permission of the copyright holder,
 ## unless it is being used to complete the course requirements of COMP 364
-dataDir <- "~/cs364/data"
+## or COMP 618.
+dataDir <- "~/repos/comp364/data"
 
 huc.load <- function(dataSets,
-                     dataDir="~/cs364/data",
+                     dataDir="~/repos/comp364/data",
                      dataTypes="exprs"){
   ## The huc.load function is the gateway
   ## to this data. The student runs this function,
@@ -110,7 +111,7 @@ huc.load <- function(dataSets,
 }
 ## Load bresect.name.map
 #load(gsub("//", "/", paste(dataDir, "/clinical/bresect.name.map.rda")))
-load("~/cs364/bresect.name.map.rda")
+load("~/repos/comp364/bresect.name.map.rda")
 ## heatmap.simple, by Ali Tofiqh, a former lab member.
 ### author: Ali Tofigh
 ###
