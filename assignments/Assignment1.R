@@ -11,7 +11,8 @@ y <- x1
 
 ## ii)
 ## M is a vector of randomly sampled numbers from 1 to 10000.
-## The size of M (ie. the number of numbers in it) is also randomly chosen from 1 to 10000.
+## The size of M (ie. the number of numbers in it) is also 
+## randomly chosen from 1 to 10000.
 M <- sample(1:10000,size=sample(1:10000,size=1))
 
 ## iii)
@@ -82,10 +83,10 @@ initializeM <- function (M){
 ## Question 3
 
 ## i)
-q1 <- list(setdiff(letters,c("a","e","i","o","u")))
+q1 <- as.list(setdiff(letters,c("a","e","i","o","u")))
 
 ## ii)
-q2 <- list(seq(from=1, to=100, by=2))
+q2 <- as.list(seq(from=1, to=100, by=2))
 
 ## iii)
 q3 <- list(c(09,08,92),c(05,01,86))
@@ -93,7 +94,7 @@ q3 <- list(c(09,08,92),c(05,01,86))
 myList <- list(q1,q2,q3)
 
 ## iv)
-myList <- list(myList[[1]], myList[[3]])
+sub.myList <- list(myList[[1]], myList[[3]])
 
 
 ## Question 4
@@ -107,43 +108,50 @@ for (dataset in dataset.collection){
 }
 
 ## Question 5
-Q5 <- data.frame()
-colnames(Q5) <- dataset.collection
 
-## a)
+## Data frame for answers to Question 5
+Q5 <- data.frame()
+
+## a) Calculate number of patients
 num.patients <- function (myData){
   return (length(huc[[myData]][["clinical"]][["id"]]))
 }
+
 number.of.patients <- c()
 for (dataset in dataset.collection){
   number.of.patients <- c(number.of.patients,(num.patients(dataset)))
 }
-Q5 <- rbind(number.of.patients)
 
-## b)
+Q5 <- rbind(c(number.of.patients,NA))
+
+## b) ER+ fraction in each dataset
 er.plus <- function (myData){
   return (sum(huc[[myData]][["clinical"]][["er"]], na.rm=TRUE))
 }
+
 fraction.er.plus <- c()
 for (dataset in dataset.collection){
   fraction.er.plus <- c(fraction.er.plus,(er.plus(dataset)/num.patients(dataset)))
 }
-Q5 <- rbind(Q5,fraction.er.plus)
 
-## c)
+Q5 <- rbind(Q5,c(fraction.er.plus,NA))
+
+## c) good to poor outcomes ratio in each dataset
 good.poor.ratio <- function (myData){
   poor <- sum(huc[[myData]][["clinical"]][["event.5"]], na.rm=TRUE)
   na.values <- sum(is.na(huc[[myData]][["clinical"]][["event.5"]]))
   good <- num.patients(myData)-na.values-poor
   paste(good,":",poor, sep="")
 }
+
 good.poor.outcomes <- c()
 for (dataset in dataset.collection){
   good.poor.outcomes <- c(good.poor.outcomes,good.poor.ratio(dataset))
 }
-Q5 <- rbind(Q5,good.poor.outcomes)
 
-## d) ER+ fraction
+Q5 <- rbind(Q5,c(good.poor.outcomes,NA))
+
+## d) ER+ fraction for all patients
 query <- function (myData, var, patient){
   ## Returns the value found in a given sub-object of a given dataset
   ## for a given patient.
@@ -161,7 +169,11 @@ for (dataset in dataset.collection){
     bool <- c(bool, (query(dataset,"er",a)))
   }
 }
-sum(bool, na.rm = TRUE)/length(bool)
+
+ER.plus.fraction <- sum(bool, na.rm = TRUE)/length(bool)
+
+Q5[1,4] <- length(bool)
+Q5[2,4] <- ER.plus.fraction
 
 ## e) HER2+ fraction
 bool <- c()
@@ -170,7 +182,10 @@ for (dataset in dataset.collection){
     bool <- c(bool, (query(dataset,"her2",a)))
   }
 }
-sum(bool, na.rm = TRUE)/length(bool)
+
+HER2.plus.fraction <- sum(bool, na.rm = TRUE)/length(bool)
+
+Q5 <- rbind(Q5,c(rep(NA,times = length(dataset.collection)),HER2.plus.fraction))
 
 ## f) ER+ and HER2+
 bool <- c()
@@ -180,7 +195,10 @@ for (dataset in dataset.collection){
                      & query(dataset,"her2",a)))
   }
 }
-sum(bool, na.rm = TRUE)/length(bool)
+
+ER.and.HER2 <- sum(bool, na.rm = TRUE)/length(bool)
+
+Q5 <- rbind(Q5,c(rep(NA,times = length(dataset.collection)),ER.and.HER2))
 
 ## g) ER- and HER2- and lymph+ and <50 years old
 bool <- 0
@@ -192,7 +210,10 @@ for (dataset in dataset.collection){
                         & query(dataset,"age",a)<50))
   }
 }
-sum(bool, na.rm = TRUE)/length(bool)
+
+ER.HER2.lymph.50 <- sum(bool, na.rm = TRUE)/length(bool)
+
+Q5 <- rbind(Q5,c(rep(NA,times = length(dataset.collection)),ER.HER2.lymph.50))
 
 ## h) ER- and HER2- and lymph+ and <50 years old and no event at 5 years
 bool <- c()
@@ -205,4 +226,17 @@ for (dataset in dataset.collection){
                       & !query(dataset,"event.5",a)))
   }
 }
-sum(bool, na.rm = TRUE)/length(bool)
+
+ER.HER2.lymph.50.event5 <- sum(bool, na.rm = TRUE)/length(bool)
+
+Q5 <- rbind(Q5,c(rep(NA,times = length(dataset.collection)),ER.HER2.lymph.50.event5))
+
+colnames(Q5) <- c(dataset.collection,"all")
+rownames(Q5) <- c("Number of patients", 
+                  "ER+ fraction", 
+                  "Ratio of good to poor outcomes",
+                  "HER2+ fraction",
+                  "ER+ and HER2+ fraction",
+                  "ER-,HER2-,lymph+,>50 fraction",
+                  "ER-,HER2-,lymph+,>50,no event.5 fraction")
+View(Q5)
