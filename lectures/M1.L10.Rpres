@@ -1,7 +1,7 @@
 Module 1, Lecture 10: I/O, Libraries/Packages, Bioconductor
 ========================================================
 author: M Hallett
-date: January 2015
+date: January 2016
 autosize:true
 font-family: 'Helvetica' 
 #output: beamer-presentation 
@@ -45,9 +45,9 @@ Revisited: Importing a csv file into R (2)
 ========================================================
 - This is your typical csv file that can be generated from Excel, Numbers, etc.
 - we assume that this file is named <code>oncotypedx.csv</code>
-- we assume it's located in our working directory (eg ~/T4LS)
+- we assume it's located in our working directory (eg ~/repos/comp364)
 ```{r}
-setwd("~/T4LS/Lectures/MiscFiles")
+setwd("~/repos/comp364/lectures/MiscFiles")
 # first do: help read.csv
 oncotype.dx.genes <- read.csv( file ="oncotypedx.csv", header = TRUE, sep = ",")
 oncotype.dx.genes[1:5,]
@@ -94,7 +94,7 @@ The read.table() function
 ```{r}
 ? read.table 
 
-setwd("~/T4LS/Lectures/MiscFiles")
+setwd("~/repos/comp364/lectures/MiscFiles")
 
 (oncotype.dx.genes2 <- read.table( 
                         file ="oncotypedx.file", 
@@ -118,7 +118,7 @@ cat("Two of the sweetest stars in all the heavens ...\n",
 
 close(dani)
 ```
-* This text is now in a file called "daniel.speaks" in the working directory (${\tt ~/T4LS/Lecures/MiscFiles}$)
+* This text is now in a file called "daniel.speaks" in the working directory (${\tt ~/repos/comp364/lecures/MiscFiles}$)
 * In Unix in the current working directory, type <code>ls</code> and then <code>cat daniel.speaks</code>.
 
 
