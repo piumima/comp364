@@ -1,8 +1,8 @@
-source("~/T4LS/src/hucMini.R")
+source("~/repos/comp364/src/hucMini.R")
 
 
-setwd('~/T4LS')
-dataset.collections <- c("nki", "miniTCGA", "vanvliet", "curtis.discovery", "curtis.validation")
+setwd('~/repos/comp364')
+dataset.collections <- c("nki", "miniTCGA", "vanvliet")
 huc <- huc.load(dataSets = dataset.collections, dataDir = "data")
 names(huc)
 
@@ -67,11 +67,11 @@ par(def.par)
 ################### Hierarchical Clustering
 
 
-source("~/T4LS/src/hucMini.R")
+source("~/repos/comp364/src/hucMini.R")
 
 
-setwd('~/T4LS')
-dataset.collections <- c("nki", "miniTCGA", "vanvliet", "curtis.discovery", "curtis.validation")
+setwd('~/repos/comp364')
+dataset.collections <- c("nki", "miniTCGA", "vanvliet")
 huc <- huc.load(dataSets = dataset.collections, dataDir = "data")
 names(huc)
 
