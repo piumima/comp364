@@ -5,10 +5,10 @@ library("e1071")
 # if this library fails, first do the following:
 # install.packages("e1071")
 
-source("~/cs364/src/hucMini.R")  # T4LS should be cs364 or cs618 for you guys.
+source("~/repos/comp364/src/hucMini.R")  # T4LS should be cs364 or cs618 for you guys.
 
 
-setwd('~/cs364')
+setwd('~/repos/comp364')
 dataset.collections <- c("vanvliet")
 huc <- huc.load(dataSets = dataset.collections, dataDir = "data")
 names(huc)
