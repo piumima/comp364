@@ -37,7 +37,8 @@ tail(my.exprs)
 my.clusters <- kmeans( my.exprs[,1:3], 3 )
 my.clusters
 
-plot(my.exprs[,1], col=my.clusters$cluster, main = "Expression Gene 1", 
+plot(my.exprs[,1], col=my.clusters$cluster, 
+     main = "Expression Gene 1", 
       xlab = "Patient #", ylab = "Expression level"
       )
 abline( v = c(100,200 ))
