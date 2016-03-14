@@ -77,9 +77,9 @@ huc <- huc.load(dataSets = dataset.collections, dataDir = "data")
 names(huc)
 
 ## order expression matrix and clinical info
-xprs <- huc$vanvliet$exprs[1:10, 1:10, drop=FALSE]
-rownames(xprs) <- huc$vanvliet$probe.info$gene.name[1:10]
-clin <- huc$vanvliet$clinical[1:10, ]
+xprs <- huc$vanvliet$exprs[1:500, 1:500, drop=FALSE]
+rownames(xprs) <- huc$vanvliet$probe.info$gene.name[1:500]
+clin <- huc$vanvliet$clinical[1:500, ]
 
 ## layout of the heatmap figure
 lmat <- matrix(c("","key", "", "title","", "",
