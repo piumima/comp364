@@ -249,13 +249,13 @@ for (i in 1:length(huc)) {
 ## this information.
 nsamples <- NULL
 erp <- NULL
-her2p <- NULL
+ern <- NULL
 good.to.bad <- NULL
 erp.her2p <- NULL
 ern.her2n.lyp.young <- NULL
 ern.her2n.lyp.young.good <- NULL
-## We can also index by names
-## This is the same as the for-loop above.
+
+## And finally, an enormous for loop to do everthing.
 for (dataset in names(huc)) {
 
   ## To make things easier to read,
@@ -264,7 +264,9 @@ for (dataset in names(huc)) {
   ## This is only here so you an see more easily.
   ## NAs are thrown away here.
   d.er <- huc[[dataset]]$clinical$er[!is.na(huc[[dataset]]$clinical$er)]
+  d.age <- huc[[dataset]]$clinical$age[!is.na(huc[[dataset]]$clinical$age)]
   d.her2 <- huc[[dataset]]$clinical$her2[!is.na(huc[[dataset]]$clinical$her2)]
+  d.lymph <- huc[[dataset]]$clinical$lymph[!is.na(huc[[dataset]]$clinical$lymph)]
   d.event5 <- huc[[dataset]]$clinical$event.5[!is.na(huc[[dataset]]$clinical$event.5)]
 
   ## Notice the use of sum(...) on vectors of booleans.
@@ -279,48 +281,41 @@ for (dataset in names(huc)) {
   ## ER+
   erp <- c(erp, sum(d.er))
 
-  ## HER2+
-  her2p <- c(her2p, sum(d.her2))
+  ## ER-
+  ern <- c(ern, sum(!d.er))
 
   ## Ratio of good to bad outcome
   good.to.bad <- c(good.to.bad,
-                   sum(!d.event5)/sum(d.event5))
+                   sum(d.event5)/sum(!d.event5))
 
   ## ER+ /\ HER2+
   erp.her2p <- c(erp.her2p,
-                 sum(na.omit(huc[[dataset]]$clinical$er
-                             & huc[[dataset]]$clinical$her2)))
+                 sum(d.er & d.her2))
 
   ## (ER- /\ HER2-) /\ (LY+ /\ age < 50)
   ern.her2n.lyp.young <- c(ern.her2n.lyp.young,
-                           sum(na.omit((!huc[[dataset]]$clinical$er
-                                        & !huc[[dataset]]$clinical$her2)
-                                        & (huc[[dataset]]$clinical$lymph
-                                           & huc[[dataset]]$clinical$age < 50))))
+                           sum((!d.er & !d.her2) & (d.lymph & d.age < 50)))
 
   ## ((ER- /\ HER2-) /\ (LY+ /\ age < 50)) /\ Good outcome
   ern.her2n.lyp.young.good <- c(ern.her2n.lyp.young.good,
-                                sum(na.omit(((!huc[[dataset]]$clinical$er
-                                              & !huc[[dataset]]$clinical$her2)
-                                             & (huc[[dataset]]$clinical$lymph
-                                                & huc[[dataset]]$clinical$age < 50))
-                                            & !huc[[dataset]]$clinical$event.5)))
+                                sum(((!d.er & !d.her2) & (d.lymph & d.age < 50)) & !d.event5))
 }
 ## Set names for easier interpretation.
 names(nsamples) <- names(huc)
 names(erp) <- names(huc)
-names(her2p) <- names(huc)
+names(ern) <- names(huc)
 names(good.to.bad) <- names(huc)
 names(erp.her2p) <- names(huc)
 names(ern.her2n.lyp.young) <- names(huc)
 names(ern.her2n.lyp.young.good) <- names(huc)
-## Print it all out and do the math...
+
+## Print it all out.
 print("Number of samples")
 nsamples
 print("ER+")
 erp
-print("HER2+")
-her2p
+print("ER-")
+ern
 print("good oucome : bad outcome")
 good.to.bad
 print("ER+ /\ HER2+")
