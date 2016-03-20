@@ -1,8 +1,8 @@
-source("~/repos/comp364/src/hucMini.R")
+source("~/T4LS/src/hucMini.R")
 
 
-setwd('~/repos/comp364')
-dataset.collections <- c("nki", "miniTCGA", "vanvliet")
+setwd('~/T4LS')
+dataset.collections <- c("nki", "miniTCGA", "vanvliet", "curtis.discovery", "curtis.validation")
 huc <- huc.load(dataSets = dataset.collections, dataDir = "data")
 names(huc)
 
@@ -37,8 +37,7 @@ tail(my.exprs)
 my.clusters <- kmeans( my.exprs[,1:3], 3 )
 my.clusters
 
-plot(my.exprs[,1], col=my.clusters$cluster, 
-     main = "Expression Gene 1", 
+plot(my.exprs[,1], col=my.clusters$cluster, main = "Expression Gene 1", 
       xlab = "Patient #", ylab = "Expression level"
       )
 abline( v = c(100,200 ))
@@ -68,18 +67,18 @@ par(def.par)
 ################### Hierarchical Clustering
 
 
-source("~/repos/comp364/src/hucMini.R")
+source("~/T4LS/src/hucMini.R")
 
 
-setwd('~/repos/comp364')
-dataset.collections <- c("nki", "miniTCGA", "vanvliet")
+setwd('~/T4LS')
+dataset.collections <- c("nki", "miniTCGA", "vanvliet", "curtis.discovery", "curtis.validation")
 huc <- huc.load(dataSets = dataset.collections, dataDir = "data")
 names(huc)
 
 ## order expression matrix and clinical info
-xprs <- huc$vanvliet$exprs[1:500, 1:500, drop=FALSE]
-rownames(xprs) <- huc$vanvliet$probe.info$gene.name[1:500]
-clin <- huc$vanvliet$clinical[1:500, ]
+xprs <- huc$vanvliet$exprs[1:10, 1:10, drop=FALSE]
+rownames(xprs) <- huc$vanvliet$probe.info$gene.name[1:10]
+clin <- huc$vanvliet$clinical[1:10, ]
 
 ## layout of the heatmap figure
 lmat <- matrix(c("","key", "", "title","", "",

@@ -1,4 +1,8 @@
 .Rproj.user
 .Rhistory
 .RData
+<<<<<<< HEAD
 .RDataTmp
+=======
+.DS_Store
+>>>>>>> 259b0bd1c5233fded3ef5c9b421fa1e3a96c7870

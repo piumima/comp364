@@ -5,10 +5,10 @@ library("e1071")
 # if this library fails, first do the following:
 # install.packages("e1071")
 
-source("~/repos/comp364/src/hucMini.R")  # T4LS should be cs364 or cs618 for you guys.
+source("~/cs364/src/hucMini.R")  # T4LS should be cs364 or cs618 for you guys.
 
 
-setwd('~/repos/comp364')
+setwd('~/cs364')
 dataset.collections <- c("vanvliet")
 huc <- huc.load(dataSets = dataset.collections, dataDir = "data")
 names(huc)
@@ -73,7 +73,7 @@ for (i in 1:length(tmp2[1,])) {
 }
 
 # remove the NA columns
-tmp <- tmp[,c(-4, -17:-12, -22)]
+tmp <- tmp[,c(-8:-10, -4, -17:-12, -22)]
 
 classifier<-naiveBayes(  
   event.5 ~ ., 
