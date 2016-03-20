@@ -73,7 +73,7 @@ for (i in 1:length(tmp2[1,])) {
 }
 
 # remove the NA columns
-tmp <- tmp[,c(-4, -17:-12, -22)]
+tmp <- tmp[,c(-8:-10, -4, -17:-12, -22)]
 
 classifier<-naiveBayes(  
   event.5 ~ ., 
