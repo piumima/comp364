@@ -201,6 +201,9 @@ next.dataset[1,]
 
 (likelihood.good <- p.good.outcome * p.e_plus.good  * p.h_neg.good * p.gr2.bad * p.ln.neg.good)
 
+classifier <- naiveBayes(  
+  event.5 ~ ., 
+  data = dataset)
 
 remaining.cases <- predict( classifier, next.dataset )
 
@@ -208,7 +211,7 @@ table( remaining.cases,
        next.dataset$event.5, 
        dnn=list('predicted','actual'))
 
-# install.packages("survival")
+install.packages("survival")
 library("survival")
 
 
