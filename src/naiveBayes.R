@@ -220,7 +220,8 @@ next.dataset[ ind.pred.good, ]
 pred.good <- rownames(next.dataset[ ind.pred.good, ] )
 is.good <- (huc$vanvliet$clinical$id %in% pred.good)
 
-surv.tmp <- Surv(huc$vanvliet$clinical$time/12, huc$vanvliet$clinical$event.5)
+surv.tmp <- Surv(huc$vanvliet$clinical$time/12, 
+                 huc$vanvliet$clinical$event.5)
 
 
 surv.fit <- survfit( surv.tmp ~ is.good )
@@ -229,7 +230,7 @@ plot(surv.fit, col=c("red", "blue"))
 
 abline(v=c(5, 10), lty=2)
 
-legend("bottomright", col=c("blue", "red"), lty=1, legend=c("Good prognosis", "Poor prognosis"))
+legend("bottomright", col=c("red", "blue"), lty=1, legend=c("Good prognosis", "Poor prognosis"))
 
 
 
