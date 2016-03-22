@@ -5,10 +5,10 @@ library("e1071")
 # if this library fails, first do the following:
 # install.packages("e1071")
 
-source("~/cs364/src/hucMini.R")  # T4LS should be cs364 or cs618 for you guys.
 
+source("~/repos/comp364/src/hucMini.R")
 
-setwd('~/cs364')
+setwd('~/repos/comp364')
 dataset.collections <- c("vanvliet")
 huc <- huc.load(dataSets = dataset.collections, dataDir = "data")
 names(huc)
@@ -96,7 +96,8 @@ tmp2 <- subset(huc$vanvliet$clinical, !is.na(event.5))
 
 length(tmp2[,1])
 
-tmp<-tmp2[, colnames(tmp2) %in% c("event.5", "er", "her2", "grade", "lymph")]
+tmp<-tmp2[, colnames(tmp2) %in% 
+              c("event.5", "er", "her2", "grade", "lymph")]
 tmp$er<-factor(tmp$er)
 tmp$her2<-factor(tmp$her2)
 tmp$grade <- factor(tmp$grade)
@@ -105,6 +106,11 @@ tmp$event.5<-factor(tmp$event.5)
 
 dataset <- tmp[1:20,]
 dataset
+
+classifier<-naiveBayes(  
+  event.5 ~ ., 
+  data = tmp) 
+
 
 next.dataset <- tmp[21:length(tmp[,1]), ]
 next.dataset[1, c("er", "her2", "grade", "lymph")]
@@ -125,6 +131,7 @@ next.dataset[1, c("er", "her2", "grade", "lymph")]
 
 p.e_plus.bad <- 4/8
 
+
 # Pr[ ER- | bad outcome ]
 p.e_neg.bad <- 4/8
 
@@ -133,7 +140,7 @@ p.e_neg.bad <- 4/8
 p.h_plus.bad <- 2/8
 
 # Pr[ Her2- | bad outcome ]
-p.h_neg.bad <- p.h_plus.bad 
+p.h_neg.bad <- 1- p.h_plus.bad 
 # 6/8
 
 
@@ -179,18 +186,24 @@ next.dataset[1,]
 
 # Choose the maximum between the following two equations
 
-# Pr[ bad.outcome ] * Pr[ ER+ | bad.outcome ] * Pr[ Her2- | bad.outcome ] 
+# Pr[ bad.outcome ] * Pr[ ER+ | bad.outcome ] 
+#                   * Pr[ Her2- | bad.outcome ] 
 #      * Pr[Grade 2 | bad.outcome] * Pr[ lymph- | bad.outcome ]
 
-(likelihood.bad <- p.bad.outcome * p.e_plus.bad  * p.h_neg.bad * p.gr2.bad * p.ln.neg.bad)
+(likelihood.bad <- p.bad.outcome * p.e_plus.bad  * 
+  p.h_neg.bad * p.gr2.bad * p.ln.neg.bad)
 
 
 # versus
-# Pr[ good.outcome ] * Pr[ ER+ | good.outcome ] * Pr[ Her2- | good.outcome ] 
+# Pr[ good.outcome ] * Pr[ ER+ | good.outcome ] 
+#                      * Pr[ Her2- | good.outcome ] 
 #      * Pr[Grade 2 | good.outcome] * Pr[ lymph- | good.outcome ]
 
 (likelihood.good <- p.good.outcome * p.e_plus.good  * p.h_neg.good * p.gr2.bad * p.ln.neg.good)
 
+classifier <- naiveBayes(  
+  event.5 ~ ., 
+  data = dataset)
 
 remaining.cases <- predict( classifier, next.dataset )
 
@@ -198,7 +211,7 @@ table( remaining.cases,
        next.dataset$event.5, 
        dnn=list('predicted','actual'))
 
-# install.packages("survival")
+install.packages("survival")
 library("survival")
 
 
