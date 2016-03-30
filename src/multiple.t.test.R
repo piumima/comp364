@@ -4,19 +4,19 @@ dataset.collections <- c("miniTCGA", "vanvliet", "nki")
 huc <- huc.load(dataset.collections, "~/repos/comp364/data")  # students should change this to ~/cs364/data
 attach(huc$vanvliet)
 
-observed.good <- subset(clinical, !event.5) 
-observed.bad <- subset(clinical, event.5)
+c.observed.good <- subset(clinical, !event.5) 
+c.observed.bad <- subset(clinical, event.5)
 
 count <- 0
-for (i in 1:nrow(exprs)) {
-  good.exprs <- exprs[i, observed.good$id]
-  bad.exprs <- exprs[i, observed.bad$id]  
+for (i in 1:3) {
+  c.good.exprs <- exprs[i, c.observed.good$id]
+  c.bad.exprs <- exprs[i, c.observed.bad$id]  
   
-  t.result <- t.test(good.exprs, bad.exprs,
-                      var.equal=TRUE)
-  p.of.t.result <- t.result$p.value
-  
-  if (p.of.t.result < 0.01) {
+  c.t.result <- t.test(c.good.exprs, c.bad.exprs,
+                      var.equal=FALSE)
+  p.of.t.result <- c.t.result$p.value
+  print(p.of.t.result)
+  if (p.of.t.result < 0.001) {
     count <- count + 1
     print(probe.info$gene.name[i])
   } # closes if
