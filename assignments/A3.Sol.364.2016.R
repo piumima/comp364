@@ -114,6 +114,11 @@ table( outcome.predict,
 (accuracy <-  (46 + 276) / nrow(validation) ) * 100
 
 
+
+
+
+
+
 # Question 3. Stratified predictors by subtype
 
 
