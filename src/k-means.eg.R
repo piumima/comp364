@@ -1,8 +1,8 @@
-source("~/T4LS/src/hucMini.R")
+source("~/repos/comp364/src/hucMini.R")
 
 
-setwd('~/T4LS')
-dataset.collections <- c("nki", "miniTCGA", "vanvliet", "curtis.discovery", "curtis.validation")
+setwd('~/repos/comp364')
+dataset.collections <- c("nki", "miniTCGA", "vanvliet")
 huc <- huc.load(dataSets = dataset.collections, dataDir = "data")
 names(huc)
 
@@ -28,7 +28,10 @@ gene1 <- c(gene1.clust1, gene1.clust2, gene1.clust3)
 gene2 <- c(gene2.clust1, gene2.clust2, gene2.clust3)
 gene3 <- c(gene3.clust1, gene3.clust2, gene3.clust3)
 
-my.exprs <- data.frame(  Expr.gene1 = gene1, Expr.gene2 = gene2, Expr.gene3 = gene3, 
+
+my.exprs <- data.frame(  Expr.gene1 = gene1, 
+                         Expr.gene2 = gene2, 
+                         Expr.gene3 = gene3, 
                          Clusts = clusts)
 
 head(my.exprs)
@@ -37,12 +40,14 @@ tail(my.exprs)
 my.clusters <- kmeans( my.exprs[,1:3], 3 )
 my.clusters
 
-plot(my.exprs[,1], col=my.clusters$cluster, main = "Expression Gene 1", 
+plot(my.exprs[,1], col=my.clusters$cluster,
+     main = "Expression Gene 1", 
       xlab = "Patient #", ylab = "Expression level"
       )
 abline( v = c(100,200 ))
 
-plot(my.exprs[,2], col=my.clusters$cluster, main = "Expression Gene 2", 
+plot(my.exprs[,2], col=my.clusters$cluster, 
+     main = "Expression Gene 2", 
      xlab = "Patient #", ylab = "Expression level"
 )
 abline( v = c(100,200 ))
@@ -67,11 +72,11 @@ par(def.par)
 ################### Hierarchical Clustering
 
 
-source("~/T4LS/src/hucMini.R")
+source("~/repos/comp618/src/hucMini.R")
 
 
-setwd('~/T4LS')
-dataset.collections <- c("nki", "miniTCGA", "vanvliet", "curtis.discovery", "curtis.validation")
+setwd('~/repos/comp618')
+dataset.collections <- c("nki", "miniTCGA", "vanvliet")
 huc <- huc.load(dataSets = dataset.collections, dataDir = "data")
 names(huc)
 
@@ -190,7 +195,7 @@ pat.h.all <- hclust(dist( t(my.vars.sorted[[2]])))
 # we need the clinical vars for each
 
                                
-top.current <- top.20
+top.current <- top.500
 c.current <- huc$vanvliet$clinical
                                
 ## layout of the heatmap figure
