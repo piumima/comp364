@@ -21,7 +21,7 @@ good.outcome.indices <- which(huc$vanvliet$clinical$event.5 == FALSE)     # the 
 bad.outcome.indices <-  which(huc$vanvliet$clinical$event.5 == TRUE) 
 
 ttest.res <- list()
-for (i in 1:length(exprs[,1])) {    # for each row (probe) ...
+for (i in 1:length(huc$vanvliet$exprs[,1])) {    # for each row (probe) ...
 
   good.exprs <- huc$vanvliet$exprs[i, good.outcome.indices]
   bad.exprs <- huc$vanvliet$exprs[i, bad.outcome.indices]
